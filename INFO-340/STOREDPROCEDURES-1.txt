@@ -1,0 +1,105 @@
+
+--STORED PROCEDURES
+
+CREATE PROCEDURE usp_NewCollege
+@CollegeName varchar(40),
+@CollegeCity varchar(40)
+
+AS
+
+BEGIN TRAN t1
+INSERT INTO COLLEGE(CollegeName, CollegeCity)
+VALUES (@CollegeName, @CollegeCity)
+
+IF @@ERROR <> 0
+ROLLBACK TRAN t1
+ELSE
+COMMIT TRAN t1
+
+EXEC usp_NewCollege
+@CollegeName = 'Boise State',
+@CollegeCity = 'Boise';
+
+
+select * from COLLEGE
+
+-------PROCEDURE 2-----------------------------------------------------
+
+CREATE PROCEDURE usp_NewGame
+@GameDate DATE,
+@GameName VARCHAR (100)
+
+AS
+
+BEGIN TRAN t1
+INSERT INTO GAME(GameDate, GameName)
+VALUES (@GameDate, @GameName)
+
+IF @@ERROR <> 0
+ROLLBACK TRAN t1
+ELSE
+COMMIT TRAN t1
+
+EXEC usp_NewGame
+@GameDate = '9/17/2016',
+@GameName = 'OSU-WSU';
+
+
+
+-- INSERT --------------------------
+INSERT INTO POSITION(PosName, PosAbbrev)
+VALUES('Quarterback','QB');
+
+select * 
+from player pl
+	JOIN Player_Position pp ON pl.playerid = pp.playerid
+	join position p on pp.positionid = p.positionID
+	where p.posname = 'QuarterBack'
+
+INSERT INTO PLAYER_POSITION
+(PositionID, PlayerID)
+VALUES (8, 10)
+
+INSERT INTO ROSTER
+(PlayerID, TeamID, RosterBeginDate, RosterEndDate)
+VALUES (10,7,'8/16/2016', '8/16/2017')
+
+INSERT INTO ROSTER_PLAY_STAT
+(RosterID, PlayID, StatID, StatValue)
+VALUES (1,7,'8/16/2016', '8/16/2017')
+
+INSERT INTO DIVISION
+(DivisionName, DivisionDescr, ConferenceID)
+VALUES ('D2', 'Second-Highest level Division', 7)
+
+INSERT INTO DIVISION_TEAM
+(DivisionID, TeamID, BeginDate)
+VALUES (1, 5, '07/19/1989')
+
+INSERT INTO PLAYER_COLLEGE
+(PlayerID, CollegeID)
+VALUES (10, 7)
+
+INSERT INTO PLAY
+(TeamGameID, Direction, Yardline, Quarter)
+VALUES (2, '+', 19, 2)
+
+INSERT INTO ROSTER_PLAY_STAT
+(RosterID, PlayID, StatID, StatValue)
+VALUES (4, 8, 8, 14)
+
+INSERT INTO PLAY_TAG
+(playID, TagID)
+VALUES (12, 1)
+
+INSERT INTO TEAM_GAME_STAT
+(teamGameID, StatID)
+VALUES (1, 3)
+
+INSERT INTO TAG
+(TagTypeID)
+VALUES (5)
+
+INSERT INTO TEAM_GAME
+(TeamID, GameID, RoleID)
+VALUES (9,7,2)

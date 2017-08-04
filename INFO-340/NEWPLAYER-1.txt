@@ -1,0 +1,43 @@
+CREATE PROCEDURE newPlayer
+@PlayerFname varchar(30),
+@PlayerLname varchar(30),
+@DOB date,
+@Jersey varchar(40),
+@height varchar(40),
+@Weight varchar(40),
+@Position varchar(40),
+@ClassYear varchar(20)
+
+AS
+
+DECLARE
+@PlayerID INT
+@PlayerPositionID INT
+@PositionID INT
+
+SET @PositionID = (SELECT PositionID 
+					FROM POSITION 
+					WHERE POSITION.PosName = @Position)
+
+
+BEGIN TRAN t1
+
+
+INSERT INTO PLAYER (PlayerFName, PlayerLName, DOB, Jersey, Height, Weight, ClassYear)
+VALUES (@PlayerFname, @PlayerLname, @DOB, @Jersey, @height, @weight, @position, @ClassYear)
+
+SET @PlayerID =(SELECT scope_Identity())
+
+INSERT INTO PLAYER_POSITION (PositionID, PlayerID)
+VALUES (@PositionID, @PlayerID)
+
+INSERT INTO ROSTER (PlayerID)
+VALUES (@PlayerID)
+
+INSERT INTO PLAYER_COLLEGE (PlayerID)
+VALUES (@PlayerID)
+
+IF @@ERROR <> 0
+ROLLBACK TRAN t1
+ELSE
+COMMIT TRAN t1

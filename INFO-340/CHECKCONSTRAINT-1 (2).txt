@@ -1,0 +1,29 @@
+USE FOOTBALL
+GO
+-- New constraint, doesn't allow new player with retired # 24 jersey
+CREATE FUNCTION fn_retiredJersey(
+@SchoolName
+@JerseyNum)
+
+RETURNS INT
+AS
+
+BEGIN
+	DECLARE @result INT = 0
+	IF EXISTS (SELECT p.Jersey 
+	FROM tblPLAYER p
+		JOIN Roster r ON p.PlayerID = r.PlayerID
+		JOIN Team t ON r.TeamID = t.TeamID
+	WHERE p.Jersey = @JerseyNum
+		AND T.TeamName = @SchoolName
+	SET @result = 1
+RETURN @result
+End
+
+ALTER TABLE Roster
+ADD CONSTRAINT fn_retiredJersey('Washington', 24)
+CHECK (dbo.fn_retiredJersey('Washington', 24) = 0)
+
+
+
+

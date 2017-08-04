@@ -1,0 +1,58 @@
+USE Football
+
+
+/*Calculated Column for "GameName" in GAME"*/
+
+ALTER FUNCTION fn_GameName(@GameID INT)
+RETURNS varchar(200)
+AS
+BEGIN
+
+DECLARE @teamOne varchar(100)
+DECLARE @teamTwo varchar(100)
+DECLARE @Ret varchar(200)
+
+SET @Ret = ' '
+
+SET @teamOne = (SELECT Top 1 TeamName 
+				FROM TEAM_GAME TG
+				JOIN TEAM T ON TG.TeamID = T.TeamID
+				JOIN GAME G ON TG.GameID = G.GameID
+				WHERE TG.GameID = @GameID
+				)
+				
+
+SET @teamTwo = (SELECT Top 1 TeamName 
+				FROM TEAM_GAME TG
+				JOIN TEAM T ON TG.TeamID = T.TeamID
+				JOIN GAME G ON TG.GameID = G.GameID
+				WHERE TG.GameID = @GameID
+				ORDER BY T.TeamID DESC
+				)
+
+SET @Ret = @teamOne + ' v ' + @teamTwo
+
+
+RETURN @Ret
+END
+
+
+EXECUTE fn_GameName @GameID = 1
+
+INSERT INTO GAME
+(GameDate, GameDescr, GameName)
+VALUES ('09/18/2016', 'Terrible', dbo.fn_GameName(8))
+
+delete game
+
+ALTER TABLE GAME
+INSERT GameName
+
+SELECT *
+FROM GAME
+
+EXECUTE fn_GameName @GameID = 1
+
+
+SELECT *
+FROM GAME

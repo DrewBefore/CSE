@@ -1,0 +1,60 @@
+use football
+go
+
+
+SELECT * FROM PLAYER
+
+SELECT pl.PlayerFName, p.PosName
+FROM PLAYER pl
+	JOIN PLAYER_POSITION pp ON pl.playerID = pp.playerID
+	JOIN POSITION p ON pp.positionID = p.positionID
+
+SELECT pl.PlayerFName, p.PosName
+FROM PLAYER pl
+	JOIN PLAYER_POSITION pp ON pl.playerID = pp.playerID
+	JOIN POSITION p ON pp.positionID = p.positionID
+WHERE
+	posName = 'Wide Receiver'
+
+SELECT t.teamName, t.teamCity,c.ConferenceName, c.ConferenceDescr
+FROM TEAM t
+	JOIN DIVISION_TEAM DT ON DT.teamID = t.teamID
+	JOIN DIVISION d ON DT.DivisionID = d.DivisionID
+	JOIN CONFERENCE c ON d.conferenceID = c.conferenceID
+WHERE conferenceName = 'ACC'
+
+SELECT pl.playerFName, count(*) AS 'Total Interceptions Thrown'
+FROM TAG_TYPE tt
+	JOIN TAG t ON tt.tagTypeID = t.tagTypeId
+	JOIN PLAY_TAG pt ON t.tagID = pt.tagID
+	JOIN PLAY p ON pt.playID = P.PlayID
+	JOIN ROSTER_PLAY_STAT rps ON p.playID = rps.PlayID
+	JOIN STAT s ON rps.statID = s.statID
+	JOIN ROSTER r ON rps.rosterID = r.rosterID
+	JOIN PLAYER pl ON r.playerID = pl.playerID
+WHERE
+	s.StatName = 'Interceptions'
+	AND pl.PlayerFName = 'Greg'
+GROUP BY pl.playerFName
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+INSERT INTO player(playerFname, playerlname, dob, jersey, height, weight, classyear)
+VALUES ('Tim', 'Tebow', '1980/08/19', 8, 160, 170, 'Senior')
+
+INSERT INTO roster_play_stat(RosterID, PlayID, StatID, StatValue)
+values (7, 9, 1, 1)
