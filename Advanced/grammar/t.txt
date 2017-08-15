@@ -1,0 +1,10 @@
+<s>::=<np> <vp>
+<np>::=<dp> <adjp> <n>|<pn>
+<pn>::=Johnny|Hailey|Nicole|Andy|Jon|Johnny's sister|Johnny's Mom|Jason
+<adjp>::=<adj>|<adj> <adjp>
+<adj>::=big|fat|ugly|whore|black|discusting|subliminal|pretentious
+<dp>::=the|a
+<n>::=dick|dickhole|butt|mouth|foot|ball|vagina|boob|donkey|Cow
+<vp>::=<tv> <np>|<iv>
+<tv>::=hit|honored|kissed|raped|thrust|cried|skrewed|groped|ignored|held|cradled|carressed
+<iv>::=died|collapsed|laughed|wept
